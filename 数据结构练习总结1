@@ -150,3 +150,48 @@ int main()
 	output(L, n);
 	return 0;
 }
+
+/*当时脑子想复杂了，队列组可以改为最大串队列q1和中间队列q2，将最大序列存入q1，用q2来判断之后的序列长度是否比q1大，可简化循环中判断的操作。*/
+
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+class Solution {
+public :
+    void add(int elem) {
+        if(elem <= tempQueue.back()){
+            if(tempQueue.size() > maxQueue.size())
+                maxQueue = tempQueue;
+            tempQueue = queue<int>();
+        }
+        tempQueue.push(elem);
+    }
+    void show() {
+        cout << maxQueue.front();
+        maxQueue.pop();
+
+        while(!maxQueue.empty()) {
+            cout << " " << maxQueue.front();
+            maxQueue.pop();
+        }
+    }
+private:
+    queue<int> maxQueue;
+    queue<int> tempQueue;
+};
+
+int main() {
+    int N;
+    cin >> N;
+
+    Solution S;
+    for(int i = 0; i < N ;i ++) {
+        int temp;
+        cin >> temp;
+        S.add(temp);
+    }
+
+    S.show();
+}
